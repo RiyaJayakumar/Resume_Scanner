@@ -1,0 +1,18 @@
+customer
+customers
+client
+clients
+duration
+start date
+end date
+from
+to
+email
+emailid
+email id
+phone
+mobile
+college
+school
+education
+degree

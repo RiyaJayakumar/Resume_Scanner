@@ -1,0 +1,10 @@
+fitz
+docx2pdf
+docx2txt
+datetime
+tabulate
+requests
+googlesearch-python
+PyPDF2
+prettytable
+flask

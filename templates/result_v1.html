@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analysis Result</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+            margin: auto;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table thead th:first-child, .table tbody td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            background-color: #343a40;
+            color: #fff;
+            white-space: nowrap;
+            min-width: 150px;
+        }
+        .table tbody td:first-child {
+            background-color: #ffffff;
+            color: #010101;
+            z-index: 2;
+            font-weight: bold;
+        }
+        .table thead th, .table tbody td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mb-4">Resume Analysis Result for {{ filename }}</h1>
+    <p>Number of Pages: {{ num_pages }}</p>
+
+    <h2>Project Details</h2>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Project Name</th>
+                <th>Technologies</th>
+                <th>Duration</th>
+                <th>Fraction</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in project_table %}
+            <tr>
+                <td>{{ project.project_name }}</td>
+                <td>{{ project.technologies }}</td>
+                <td>{{ project.duration }}</td>
+                <td>{{ project.fraction }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Total Duration: {{ total_duration }}</p>
+    <p>Total Fraction: {{ total_fraction }}</p>
+
+    <h2>Elaborate Summary</h2>
+    <ul>
+        {% for summary in elaborate_summary %}
+        <li>
+            Project Name: {{ summary.project_name }}<br>
+            Technologies: {{ summary.technologies }}<br>
+            Duration: {{ summary.duration }}<br>
+            Lines: {{ summary.lines | join(', ') }}<br>
+            Fraction: {{ summary.fraction }}
+        </li>
+        {% endfor %}
+    </ul>
+    <p>Total Fraction Summary: {{ total_fraction_summary }}</p>
+
+    <h3>Technologies Used</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    <th>Technology</th>
+                    <th>Count</th>
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word, count in resume_comparison_data.tech_counts.items() %}
+                <tr>
+                    <td>{{ filename }}</td>
+                    <td>{{ word }}</td>
+                    <td>{{ count }}</td>
+                    <td>{{ resume_comparison_data.tech_similarity_percentage }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="mt-5">Keywords Used</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    <th>Keyword</th>
+                    <th>Count</th>
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word, count in resume_comparison_data.keyword_counts.items() %}
+                <tr>
+                    <td>{{ filename }}</td>
+                    <td>{{ word }}</td>
+                    <td>{{ count }}</td>
+                    <td>{{ resume_comparison_data.keyword_similarity_percentage }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="mt-5">Ability Words Used</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    <th>Ability Word</th>
+                    <th>Count</th>
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word, count in resume_comparison_data.ability_word_counts.items() %}
+                <tr>
+                    <td>{{ filename }}</td>
+                    <td>{{ word }}</td>
+                    <td>{{ count }}</td>
+                    <td>{{ resume_comparison_data.ability_word_similarity_percentage }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Total Similarity Percentage: {{ resume_comparison_data.total_similarity_percentage }}%</h2>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

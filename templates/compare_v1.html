@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Comparison</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+            margin: auto;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table thead th:first-child, .table tbody td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            background-color: #343a40;
+            color: #fff;
+            white-space: nowrap;
+            min-width: 150px;
+        }
+        .table tbody td:first-child {
+            background-color: #ffffff;
+            color: #010101;
+            z-index: 2;
+            font-weight: bold;
+        }
+        .table thead th, .table tbody td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mb-4">Resume Comparison</h1>
+
+    <h3>Technologies Used</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    {% for tech in technologies %}
+                        <th>{{ tech }}</th>
+                    {% endfor %}
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in comparison_data %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('result', filename=resume.filename) }}">
+                                {{ resume.filename }}
+                            </a>
+                        </td>
+                        {% for tech in technologies %}
+                            <td>{{ resume.tech_counts[tech] }}</td>
+                        {% endfor %}
+                        <td>{{ resume.tech_similarity_percentage }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="mt-5">Keywords Used</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    {% for keyword in keywords %}
+                        <th>{{ keyword }}</th>
+                    {% endfor %}
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in comparison_data %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('result', filename=resume.filename) }}">
+                                {{ resume.filename }}
+                            </a>
+                        </td>
+                        {% for keyword in keywords %}
+                            <td>{{ resume.keyword_counts[keyword] }}</td>
+                        {% endfor %}
+                        <td>{{ resume.keyword_similarity_percentage }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="mt-5">Ability Words Used</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    {% for ability_word in ability_words %}
+                        <th>{{ ability_word }}</th>
+                    {% endfor %}
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in comparison_data %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('result', filename=resume.filename) }}">
+                                {{ resume.filename }}
+                            </a>
+                        </td>
+                        {% for ability_word in ability_words %}
+                            <td>{{ resume.ability_word_counts[ability_word] }}</td>
+                        {% endfor %}
+                        <td>{{ resume.ability_word_similarity_percentage }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <h3 class="mt-5">Ranking of Resumes</h3>
+    <div class="table-container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Resume Name</th>
+                    <th>Similarity Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in comparison_data %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('result', filename=resume.filename) }}">
+                                {{ resume.filename }}
+                            </a>
+                        </td>
+                        <td>{{ resume.total_similarity_percentage }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

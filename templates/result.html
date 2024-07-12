@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Resume Analysis for {{ result.filename }}</h1>
+    <p>Number of pages: {{ num_pages }}</p>
+    <p>Total Duration Days: {{ result.total_duration_days }}</p>
+    
+    <h2>Project Details</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Technologies Used</th>
+                <th>Fraction of Technologies</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in result.project_details %}
+            <tr>
+                <td>{{ project.project_name }}</td>
+                <td>{{ project.technologies }}</td>
+                <td>{{ project.fraction }}</td>
+                <td>{{ project.duration }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Summary</h2>
+    <ul>
+        <li>Customer lines: {{ result.summary.customer_lines }}</li>
+        <li>Date lines: {{ result.summary.date_lines }}</li>
+        <li>Requirement lines: {{ result.summary.requirement_lines }}</li>
+        <li>Project lines: {{ result.summary.project_lines }}</li>
+        <li>Duration lines: {{ result.summary.duration_lines }}</li>
+    </ul>
+</body>
+</html>
+
+

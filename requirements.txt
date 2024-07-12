@@ -7,4 +7,3 @@ requests
 googlesearch-python
 PyPDF2
 prettytable
-flask
